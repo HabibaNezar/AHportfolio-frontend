@@ -1,0 +1,137 @@
+:host {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  display: flex;
+  justify-content: center;
+  z-index: 70;
+  pointer-events: none;
+}
+
+.floating-nav {
+  pointer-events: auto;
+  display: flex;
+  align-items: center; /* بيخلي التمدد من المنتصف فالتكبير يطلع بره الكونتينر من فوق وتحت بشكل أنيق */
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-secondary) 88%, transparent);
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 40px color-mix(in srgb, #000 45%, transparent);
+  backdrop-filter: blur(14px);
+  
+  /* مهم جداً: بيسمح للعناصر تطلع بره الفريم الخارجي */
+  overflow: visible;
+
+  /* حالة الحركة السريعة (لما الماوس يكون جوه الكونتينر) */
+  &.is-hovering .floating-item {
+    transition: 
+      width 0.1s ease-out, 
+      height 0.1s ease-out, 
+      background 0.1s ease-out, 
+      color 0.1s ease-out;
+
+    .icon {
+      transition: transform 0.1s ease-out;
+    }
+  }
+}
+
+.floating-item {
+  position: relative;
+  
+  /* القيم الافتراضية اللي بتستقبل التحديثات من الـ TS */
+  --dynamic-size: 44px;
+  --dynamic-icon-scale: 1;
+  --dynamic-z-index: 1;
+  --bg-mix-percent: 0%;
+  --tooltip-opacity: 0;
+  --tooltip-y: 8px;
+
+  /* تطبيق الحجم الديناميكي */
+  width: var(--dynamic-size);
+  height: var(--dynamic-size);
+  z-index: var(--dynamic-z-index);
+  
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  
+  /* مزج الألوان تدريجياً على حسب القرب */
+  background: color-mix(in srgb, var(--accent-soft) var(--bg-mix-percent), transparent);
+  color: color-mix(in srgb, var(--accent-strong) var(--bg-mix-percent), var(--ink-soft));
+
+  /* حالة الخروج أو الاستقرار (Transition بطيء وناعم لما تبعدي الماوس) */
+  transition: 
+    width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    height 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 0.4s ease,
+    color 0.4s ease;
+
+  will-change: width, height;
+
+  .icon {
+    display: grid;
+    place-items: center;
+    transform: scale(var(--dynamic-icon-scale));
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  /* المؤشر السفلي لحالة الـ Active */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    inset-inline: 0;
+    margin-inline: auto;
+    width: 4px;
+    height: 3px;
+    border-radius: 999px;
+    background: transparent;
+    transition: width 0.3s ease, background-color 0.3s ease;
+  }
+
+  /* Tooltip مبرمج إنه يظهر بـ Opacity و Translate بناءً على الـ TS */
+  &::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 14px);
+    left: 50%;
+    transform: translate(-50%, var(--tooltip-y)) scale(calc(0.9 + (var(--tooltip-opacity) * 0.1)));
+    opacity: var(--tooltip-opacity);
+    pointer-events: none;
+    white-space: nowrap;
+    background: var(--bg-secondary);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  /* حالة الصفحة الحالية */
+  &.active {
+    &::after {
+      width: 16px;
+      background: var(--accent);
+    }
+    
+    /* لو العنصر مش معملوله Hover خلي لونه Accent برضه */
+    &:not([style*="--bg-mix-percent"]) {
+      color: var(--accent-strong);
+      background: color-mix(in srgb, var(--accent-soft) 20%, transparent);
+    }
+  }
+}

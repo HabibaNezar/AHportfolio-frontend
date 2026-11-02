@@ -1,0 +1,23 @@
+<header class="login-topbar">
+  <app-navbar />
+</header>
+
+<form class="login-form" (ngSubmit)="onSubmit()">
+  <h2>{{ lang.t('login.title') }}</h2>
+
+  <label>
+    {{ lang.t('login.email') }}
+    <input type="email" name="email" [(ngModel)]="email" required />
+  </label>
+
+  <label>
+    {{ lang.t('login.password') }}
+    <input type="password" name="password" [(ngModel)]="password" required />
+  </label>
+
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+
+  <button type="submit">{{ lang.t('login.submit') }}</button>
+</form>

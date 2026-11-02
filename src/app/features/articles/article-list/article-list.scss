@@ -1,0 +1,32 @@
+/* ============================================================= #articles */
+
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  padding: clamp(48px, 7vw, 88px) clamp(20px, 6vw, 96px);
+  border-bottom: 1px solid var(--line);
+
+  > .section-heading {
+    grid-column: 1 / -1;
+    margin-bottom: 8px;
+  }
+}
+
+.repo-card.article-card {
+  min-height: 180px;
+}
+
+/* ======================================================== responsive */
+
+@media (max-width: 900px) {
+  .article-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .article-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,258 @@
+<section class="project-manager">
+  <div class="manager-header">
+    <div class="header-titles">
+      <h2>Projects</h2>
+      <p class="muted">Manage and organize your portfolio projects</p>
+    </div>
+    <button type="button" class="btn-primary" (click)="startCreate()">
+      <span class="icon">+</span> Add Project
+    </button>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-error">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading projects…</p>
+    </div>
+  } @else {
+    <div class="table-card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="col-order">Order</th>
+              <th>Project Details</th>
+              <th>Tags</th>
+              <th>Links</th>
+              <th>Media</th>
+              <th class="col-actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (project of projects(); track project.id) {
+              <tr>
+                <td class="col-order">
+                  <span class="order-badge">{{ project.order }}</span>
+                </td>
+
+                <td>
+                  <div class="project-info-cell">
+                    @if (project.thumbnailUrl) {
+                      <div class="project-thumb">
+                        <img [src]="project.thumbnailUrl" alt="Thumbnail" />
+                      </div>
+                    } @else {
+                      <div class="project-thumb fallback">
+                        <span>No Img</span>
+                      </div>
+                    }
+                    <div class="project-titles">
+                      <strong>{{ project.titleEn }}</strong>
+                      <span class="sub">{{ project.titleAr }}</span>
+                    </div>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="tags-container">
+                    @for (tag of project.tags; track tag) {
+                      <span class="tag-pill">{{ tag }}</span>
+                    }
+                  </div>
+                </td>
+
+                <td class="links-cell">
+                  @if (project.githubRepoUrl) {
+                    <a
+                      [href]="project.githubRepoUrl"
+                      target="_blank"
+                      rel="noopener"
+                      class="link-item"
+                      >Repo</a
+                    >
+                  }
+                  @if (project.liveDemoUrl) {
+                    <a [href]="project.liveDemoUrl" target="_blank" rel="noopener" class="link-item"
+                      >Demo</a
+                    >
+                  }
+                  @if (!project.githubRepoUrl && !project.liveDemoUrl) {
+                    <span class="muted">—</span>
+                  }
+                </td>
+
+                <td class="links-cell">
+                  @if (project.thumbnailUrl) {
+                    <a
+                      [href]="project.thumbnailUrl"
+                      target="_blank"
+                      rel="noopener"
+                      class="link-item"
+                      >Img</a
+                    >
+                  }
+                  @if (project.videoUrl) {
+                    <a [href]="project.videoUrl" target="_blank" rel="noopener" class="link-item"
+                      >Vid</a
+                    >
+                  }
+                  @if (!project.thumbnailUrl && !project.videoUrl) {
+                    <span class="muted">—</span>
+                  }
+                </td>
+
+                <td class="actions-cell">
+                  <button type="button" class="btn-icon" (click)="startEdit(project)" title="Edit">
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-icon danger"
+                    (click)="deleteProject(project.id)"
+                    title="Delete"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="6" class="empty-state">
+                  <p class="muted">No projects found. Ready to add your first one?</p>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+  @if (showForm()) {
+    <div class="modal-overlay" (click)="closeForm()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3>{{ editingId() === null ? 'Create New Project' : 'Edit Project' }}</h3>
+          <button type="button" class="close-btn" (click)="closeForm()">×</button>
+        </div>
+
+        <form (ngSubmit)="save()" class="modern-form">
+          <!-- Two Column Layout via Grid -->
+          <div class="form-group">
+            <label>Title (EN)</label>
+            <input
+              type="text"
+              name="titleEn"
+              [(ngModel)]="titleEn"
+              required
+              placeholder="e.g. E-Commerce App"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Title (AR)</label>
+            <input
+              type="text"
+              name="titleAr"
+              [(ngModel)]="titleAr"
+              required
+              placeholder="مثال: تطبيق متجر إلكتروني"
+              dir="auto"
+            />
+          </div>
+
+          <div class="form-group full-width">
+            <label>Description (EN)</label>
+            <textarea
+              name="descEn"
+              [(ngModel)]="descEn"
+              rows="3"
+              placeholder="Brief details about the project..."
+            ></textarea>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Description (AR)</label>
+            <textarea
+              name="descAr"
+              [(ngModel)]="descAr"
+              rows="3"
+              placeholder="وصف المشروع بالعربية..."
+              dir="auto"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>GitHub Repo URL</label>
+            <input
+              type="url"
+              name="githubRepoUrl"
+              [(ngModel)]="githubRepoUrl"
+              placeholder="https://github.com/..."
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Live Demo URL</label>
+            <input
+              type="url"
+              name="liveDemoUrl"
+              [(ngModel)]="liveDemoUrl"
+              placeholder="https://..."
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Tags</label>
+            <input
+              type="text"
+              name="tags"
+              [(ngModel)]="tagsInput"
+              placeholder="angular, scss, api (comma separated)"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Order (Priority)</label>
+            <input type="number" name="order" [(ngModel)]="order" />
+          </div>
+
+          <div class="form-group full-width file-group">
+            <label>Thumbnail Image</label>
+            <div class="file-upload-wrapper">
+              <input type="file" accept="image/*" (change)="onThumbnailChange($event)" />
+              @if (thumbnailUrl && !thumbnailFile) {
+                <span class="file-hint success">✓ Current file saved</span>
+              }
+            </div>
+          </div>
+
+          <div class="form-group full-width file-group">
+            <label>Video Demo</label>
+            <div class="file-upload-wrapper">
+              <input type="file" accept="video/*" (change)="onVideoChange($event)" />
+              @if (videoUrl && !videoFile) {
+                <span class="file-hint success">✓ Current video saved</span>
+              }
+            </div>
+          </div>
+
+          @if (uploading()) {
+            <div class="form-group full-width alert alert-info">Uploading media, please wait…</div>
+          }
+
+          <div class="form-actions full-width">
+            <button type="button" class="btn-ghost" (click)="closeForm()">Cancel</button>
+            <button type="submit" class="btn-primary" [disabled]="saving() || uploading()">
+              {{ saving() ? 'Saving…' : 'Save Project' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</section>

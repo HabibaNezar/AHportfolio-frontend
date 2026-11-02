@@ -1,0 +1,242 @@
+@use 'themes';
+@use 'rtl';
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  font-family: 'General Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  transition:
+    background .25s,
+    color .25s;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+section[id] {
+  scroll-margin-top: 96px;
+}
+
+/* shared section/button/card primitives used across feature components */
+
+.section-heading {
+  max-width: 780px;
+
+  span {
+    font-family: ui-monospace, 'Cascadia Code', 'JetBrains Mono', monospace;
+    color: var(--accent-strong);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-size: clamp(28px, 4vw, 42px);
+    letter-spacing: 0;
+    margin: 8px 0 0;
+  }
+
+  .section-sub {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 12px 0 0;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 22px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition:
+    background .2s,
+    border-color .2s,
+    color .2s,
+    box-shadow .2s,
+    transform .2s;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--accent) 38%, transparent);
+
+  &:hover {
+    background: var(--accent-strong);
+    box-shadow: 0 14px 36px var(--glow);
+  }
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+
+  &:hover {
+    border-color: var(--accent);
+    color: var(--accent-strong);
+    box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+}
+
+.repo-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  display: grid;
+  gap: 12px;
+  min-height: 170px;
+  padding: 22px;
+  text-decoration: none;
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
+  transition:
+    border-color .2s,
+    transform .2s,
+    box-shadow .2s;
+
+  &:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px color-mix(in srgb, var(--accent) 14%, transparent);
+  }
+
+  h3 {
+    font-size: 19px;
+    letter-spacing: 0;
+    margin: 0;
+  }
+
+  p {
+    color: var(--ink-soft);
+    font-size: 14px;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  > span:last-child {
+    color: var(--accent-strong);
+    font-weight: 800;
+    margin-top: auto;
+  }
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-soft);
+}
+
+/* ---- Driver.js onboarding tour theme (smooth, welcoming) ---- */
+
+.driver-overlay path {
+  transition: all .45s ease-in-out;
+}
+
+.driver-active-element {
+  transition: all .45s ease-in-out;
+}
+
+.portfolio-tour-popover.driver-popover {
+  max-width: 360px;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 24px 70px color-mix(in srgb, var(--accent) 25%, transparent);
+  animation: tour-pop-in .35s ease-out;
+}
+
+.portfolio-tour-popover .driver-popover-title {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.portfolio-tour-popover .driver-popover-description {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.portfolio-tour-popover .driver-popover-footer button {
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-weight: 700;
+  border: 1px solid var(--line);
+  background: var(--accent);
+  color: #fff;
+  transition: transform .2s, box-shadow .2s, background .2s;
+}
+
+.portfolio-tour-popover .driver-popover-footer button:hover {
+  transform: translateY(-1px);
+  background: var(--accent-strong);
+  box-shadow: 0 8px 22px var(--glow);
+}
+
+@keyframes tour-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

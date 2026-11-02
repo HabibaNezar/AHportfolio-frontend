@@ -1,0 +1,147 @@
+<section class="profile-manager">
+  <div class="manager-header">
+    <div class="header-titles">
+      <h2>Profile Settings</h2>
+      <p class="muted">Manage your personal information, bio, and social links</p>
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-error">{{ error() }}</div>
+  }
+
+  @if (saved()) {
+    <div class="alert alert-success">Profile saved successfully!</div>
+  }
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading profile data…</p>
+    </div>
+  } @else {
+    <div class="form-card">
+      <form (ngSubmit)="saveProfile()" class="modern-form">
+        <!-- Names Section -->
+        <div class="form-group">
+          <label>Name (EN)</label>
+          <input type="text" name="nameEn" [(ngModel)]="nameEn" required placeholder="John Doe" />
+        </div>
+
+        <div class="form-group">
+          <label>Name (AR)</label>
+          <input
+            type="text"
+            name="nameAr"
+            [(ngModel)]="nameAr"
+            required
+            placeholder="الاسم بالعربية"
+            dir="auto"
+          />
+        </div>
+
+        <!-- Bio Section -->
+        <div class="form-group full-width">
+          <label>Bio (EN)</label>
+          <textarea
+            name="bioEn"
+            [(ngModel)]="bioEn"
+            rows="4"
+            placeholder="Tell us about yourself..."
+          ></textarea>
+        </div>
+
+        <div class="form-group full-width">
+          <label>Bio (AR)</label>
+          <textarea
+            name="bioAr"
+            [(ngModel)]="bioAr"
+            rows="4"
+            placeholder="نبذة عنك بالعربية..."
+            dir="auto"
+          ></textarea>
+        </div>
+
+        <!-- Avatar Section -->
+        <div class="form-group">
+          <label>Avatar (Upload File)</label>
+          <div class="file-upload-wrapper">
+            <input type="file" accept="image/*" (change)="onAvatarChange($event)" />
+            @if (avatarUrl && !avatarFile) {
+              <a [href]="avatarUrl" target="_blank" rel="noopener" class="file-hint link"
+                >View Current</a
+              >
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Avatar URL (Optional Manual Link)</label>
+          <input type="url" name="avatarUrl" [(ngModel)]="avatarUrl" placeholder="https://..." />
+        </div>
+
+        <!-- Resume Section -->
+        <div class="form-group">
+          <label>Resume (Upload File)</label>
+          <div class="file-upload-wrapper">
+            <input type="file" (change)="onResumeChange($event)" />
+            @if (resumeUrl && !resumeFile) {
+              <a [href]="resumeUrl" target="_blank" rel="noopener" class="file-hint link"
+                >View Current</a
+              >
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Resume URL (Optional Manual Link)</label>
+          <input type="url" name="resumeUrl" [(ngModel)]="resumeUrl" placeholder="https://..." />
+        </div>
+
+        <!-- Social Links Section -->
+        <div class="section-divider full-width">
+          <h4>Social Links</h4>
+        </div>
+
+        <div class="form-group">
+          <label>GitHub URL</label>
+          <input
+            type="url"
+            name="githubUrl"
+            [(ngModel)]="githubUrl"
+            placeholder="https://github.com/..."
+          />
+        </div>
+
+        <div class="form-group">
+          <label>LinkedIn URL</label>
+          <input
+            type="url"
+            name="linkedInUrl"
+            [(ngModel)]="linkedInUrl"
+            placeholder="https://linkedin.com/in/..."
+          />
+        </div>
+
+        <div class="form-group">
+          <label>X (Twitter) URL</label>
+          <input type="url" name="xUrl" [(ngModel)]="xUrl" placeholder="https://x.com/..." />
+        </div>
+
+        <!-- Uploading State -->
+        @if (uploading()) {
+          <div class="form-group full-width alert alert-info">
+            Uploading media files, please wait…
+          </div>
+        }
+
+        <!-- Actions -->
+        <div class="form-actions full-width">
+          <button type="submit" class="btn-primary" [disabled]="saving() || uploading()">
+            {{ saving() ? 'Saving Changes…' : 'Save Profile' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  }
+</section>

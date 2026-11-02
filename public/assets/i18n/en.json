@@ -1,0 +1,79 @@
+{
+  "nav": {
+    "brand": "Portfolio",
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "articles": "Articles",
+    "documentation": "Documentation",
+    "contact": "Contact",
+    "github": "GitHub",
+    "blog": "Blog",
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "logout": "Logout",
+    "theme": "Toggle theme",
+    "language": "Switch language"
+  },
+  "home": {
+    "role": "AI Engineer",
+    "tagline": "Building intelligent systems that ship brilliant products.",
+    "heroEyebrow": "Hi, I am",
+    "heroSubtitle": "AI Engineer",
+    "hireMe": "Hire Me",
+    "workCta": "View My Work",
+    "contactCta": "Contact Me",
+    "resume": "Resume",
+    "loading": "Loading...",
+    "error": "Could not load portfolio profile. Check that the API is running.",
+    "githubTitle": "Recent repositories",
+    "githubEmpty": "No repositories yet",
+    "projectsTitle": "Selected projects",
+    "articlesTitle": "Latest articles"
+  },
+  "about": {
+    "title": "About me",
+    "skillsTitle": "Skills & Stack",
+    "skillsEmpty": "No skills yet",
+    "others": "Others",
+    "experiencesTitle": "Experience",
+    "experiencesEmpty": "No experiences yet",
+    "present": "Present"
+  },
+  "docs": {
+    "title": "Documentation & write-ups",
+    "subtitle": "Guides, notes and case studies from the field.",
+    "guideTitle": "Getting Started Guide",
+    "guideDesc": "New here? A quick tour of what I build and how I work.",
+    "apiTitle": "Working with my APIs",
+    "apiDesc": "REST contracts, request examples and live demos for my backend services.",
+    "caseTitle": "Case Studies",
+    "caseDesc": "Deep dives into real problems, experiments and lessons learned."
+  },
+  "contact": {
+    "title": "Let's build something",
+    "subtitle": "Have a project in mind or an opportunity to share? My inbox is open.",
+    "formName": "Your name",
+    "formEmail": "Your email",
+    "formMessage": "Your message",
+    "submit": "Send message",
+    "pendingMsg": "Thanks! This form isn't wired to a backend yet — email me directly meanwhile."
+  },
+  "projects": {
+    "empty": "No projects yet"
+  },
+  "articles": {
+    "empty": "No articles yet"
+  },
+  "footer": {
+    "tagline": "AI Engineer",
+    "rights": "All rights reserved."
+  },
+  "login": {
+    "title": "Dashboard Login",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Login",
+    "error": "Invalid email or password."
+  }
+}

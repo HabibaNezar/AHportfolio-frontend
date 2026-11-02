@@ -1,0 +1,20 @@
+<app-navbar />
+
+<!-- #articles -->
+<section id="articles" class="article-grid">
+  <div class="section-heading">
+    <span>{{ lang.t('nav.articles') }}</span>
+    <h2>{{ lang.t('home.articlesTitle') }}</h2>
+  </div>
+  @for (article of articles(); track article.id) {
+    <a class="repo-card article-card" [routerLink]="['/articles', article.slug]">
+      <h3>{{ lang.pick(article.titleAr, article.titleEn) }}</h3>
+      <p>{{ lang.pick(article.excerptAr, article.excerptEn) }}</p>
+      <span>{{ article.publishedAt?.slice(0, 10) }}</span>
+    </a>
+  } @empty {
+    <p>{{ lang.t('articles.empty') }}</p>
+  }
+</section>
+
+<app-footer />

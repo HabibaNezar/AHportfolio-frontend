@@ -1,0 +1,26 @@
+<app-navbar />
+
+@if (project(); as item) {
+  <section class="project-detail">
+    <h1>{{ lang.pick(item.titleAr, item.titleEn) }}</h1>
+
+    @if (item.thumbnailUrl) {
+      <img [src]="item.thumbnailUrl" [alt]="lang.pick(item.titleAr, item.titleEn)" />
+    }
+
+    <p>{{ lang.pick(item.descAr, item.descEn) }}</p>
+
+    <div class="project-links">
+      @if (item.githubRepoUrl) {
+        <a [href]="item.githubRepoUrl" target="_blank" rel="noreferrer">GitHub</a>
+      }
+      @if (item.liveDemoUrl) {
+        <a [href]="item.liveDemoUrl" target="_blank" rel="noreferrer">Live Demo</a>
+      }
+    </div>
+  </section>
+} @else {
+  <p>{{ lang.t('projects.empty') }}</p>
+}
+
+<app-footer />

@@ -1,0 +1,60 @@
+.footer {
+  border-top: 1px solid var(--line);
+  // extra bottom padding clears the fixed floating nav
+  padding: clamp(28px, 5vw, 56px) clamp(20px, 6vw, 96px) 124px;
+}
+
+.footer-inner {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: space-between;
+  padding-bottom: 24px;
+}
+
+.footer-name {
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.footer-brand p {
+  color: var(--ink-soft);
+  font-size: 14px;
+  margin: 6px 0 0;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer-links a {
+  background: color-mix(in srgb, var(--line) 35%, transparent);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 11px;
+  text-decoration: none;
+  transition:
+    background .2s,
+    border-color .2s,
+    color .2s;
+}
+
+.footer-links a:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--line));
+  color: var(--accent);
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 13px;
+  padding-top: 16px;
+}

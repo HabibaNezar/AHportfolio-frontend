@@ -1,0 +1,210 @@
+<section class="about-manager">
+  <div class="manager-header">
+    <div class="header-titles">
+      <h2>About Settings</h2>
+      <p class="muted">Manage your professional bio, skills, and experiences</p>
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="alert alert-error">{{ error() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading about data…</p>
+    </div>
+  } @else if (about(); as data) {
+    <!-- About Text Card -->
+    <div class="form-card">
+      <div class="card-header">
+        <h3>About Summary</h3>
+        @if (saved()) {
+          <span class="badge success">Saved Successfully</span>
+        }
+      </div>
+      <form (ngSubmit)="saveAboutText()" class="modern-form">
+        <div class="form-group full-width">
+          <label>Professional Bio</label>
+          <textarea
+            name="aboutText"
+            [(ngModel)]="aboutText"
+            rows="5"
+            placeholder="Write a brief summary about yourself..."
+          ></textarea>
+        </div>
+        <div class="form-actions full-width">
+          <button type="submit" class="btn-primary" [disabled]="savingAbout()">
+            {{ savingAbout() ? 'Saving…' : 'Save Summary' }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Skill Categories Card -->
+    <div class="form-card">
+      <div class="card-header">
+        <h3>Skill Categories</h3>
+      </div>
+      <form class="modern-form align-bottom" (ngSubmit)="addCategory()">
+        <div class="form-group">
+          <label>New Category Name</label>
+          <input
+            type="text"
+            name="categoryName"
+            [(ngModel)]="categoryName"
+            placeholder="e.g. Frontend, Backend..."
+            required
+          />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary" [disabled]="savingCategory()">
+            {{ savingCategory() ? 'Adding…' : 'Add Category' }}
+          </button>
+        </div>
+      </form>
+
+      <ul class="modern-list mt-4">
+        @for (category of data.skillCategories; track category.id) {
+          <li class="list-item">
+            <div class="item-info">
+              <strong>{{ category.name }}</strong>
+              <span class="badge">{{ category.items.length }} skills</span>
+            </div>
+            <button type="button" class="btn-icon danger" (click)="deleteCategory(category.id)">
+              Delete
+            </button>
+          </li>
+        } @empty {
+          <li class="list-item muted justify-center">No skill categories yet.</li>
+        }
+      </ul>
+    </div>
+
+    <!-- Skills Card -->
+    <div class="form-card">
+      <div class="card-header">
+        <h3>Skills & Technologies</h3>
+      </div>
+      <form class="modern-form align-bottom" (ngSubmit)="addItem()">
+        <div class="form-group">
+          <label>Category</label>
+          <select name="itemCategoryId" [(ngModel)]="itemCategoryId" required>
+            @for (category of data.skillCategories; track category.id) {
+              <option [ngValue]="category.id">{{ category.name }}</option>
+            }
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Skill Name</label>
+          <input
+            type="text"
+            name="itemName"
+            [(ngModel)]="itemName"
+            placeholder="e.g. Angular"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Icon Class (Optional)</label>
+          <input
+            type="text"
+            name="itemIcon"
+            [(ngModel)]="itemIcon"
+            placeholder="e.g. fa-brands fa-angular"
+          />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary" [disabled]="savingItem()">
+            {{ savingItem() ? 'Adding…' : 'Add Skill' }}
+          </button>
+        </div>
+      </form>
+
+      <div class="skills-grouped mt-4">
+        @for (category of data.skillCategories; track category.id) {
+          <div class="skill-group">
+            <h4>{{ category.name }}</h4>
+            <ul class="modern-list">
+              @for (item of category.items; track item.id) {
+                <li class="list-item">
+                  <div class="item-info">
+                    @if (item.icon) {
+                      <i [class]="item.icon + ' icon-preview'"></i>
+                    }
+                    <span>{{ item.name }}</span>
+                  </div>
+                  <button type="button" class="btn-icon danger" (click)="deleteItem(item.id)">
+                    Delete
+                  </button>
+                </li>
+              } @empty {
+                <li class="list-item muted justify-center">No skills in this category.</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Experiences Card -->
+    <div class="form-card">
+      <div class="card-header">
+        <h3>Experiences</h3>
+      </div>
+      <form (ngSubmit)="addExperience()" class="modern-form">
+        <div class="form-group">
+          <label>From Date</label>
+          <input type="date" name="expFrom" [(ngModel)]="expFrom" />
+        </div>
+        <div class="form-group">
+          <label>To Date (Leave empty if Present)</label>
+          <input type="date" name="expTo" [(ngModel)]="expTo" />
+        </div>
+        <div class="form-group full-width">
+          <label>Experience Description</label>
+          <textarea
+            name="expDescription"
+            [(ngModel)]="expDescription"
+            rows="3"
+            required
+            placeholder="Describe your role, company, and achievements..."
+          ></textarea>
+        </div>
+        <div class="form-actions full-width">
+          <button type="submit" class="btn-primary" [disabled]="savingExperience()">
+            {{ savingExperience() ? 'Adding…' : 'Add Experience' }}
+          </button>
+        </div>
+      </form>
+
+      <ul class="modern-list mt-4">
+        @for (experience of data.experiences; track experience.id) {
+          <li class="list-item align-start">
+            <div class="item-info vertical">
+              <div class="dates muted">
+                {{ experience.from ? (experience.from | date: 'mediumDate') : 'N/A' }} —
+                {{ experience.to ? (experience.to | date: 'mediumDate') : 'Present' }}
+              </div>
+              <p class="desc">{{ experience.description }}</p>
+            </div>
+            <button
+              type="button"
+              class="btn-icon danger mt-2"
+              (click)="deleteExperience(experience.id)"
+            >
+              Delete
+            </button>
+          </li>
+        } @empty {
+          <li class="list-item muted justify-center">No experiences yet.</li>
+        }
+      </ul>
+    </div>
+  } @else {
+    <div class="empty-state">
+      <p class="muted">No about data found.</p>
+    </div>
+  }
+</section>

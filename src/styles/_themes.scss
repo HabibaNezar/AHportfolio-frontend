@@ -1,0 +1,53 @@
+// Theme tokens. Dark is the default (root), .light flips to light mode.
+// Components should only reference these variables — never hardcode colors.
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #0d0f14;
+  --surface: #12141c;
+  --text-primary: #e9ecf5;
+  --text-secondary: #98a1b3;
+  --accent: #3b82f6;
+  --accent-strong: #60a5fa;
+  --accent-soft: rgba(59, 130, 246, 0.14);
+  --line: #1f2430;
+  --glow: rgba(59, 130, 246, 0.35);
+
+  // Legacy aliases — existing components reference these
+  --bg: var(--bg-primary);
+  --ink: var(--text-primary);
+  --ink-soft: var(--text-secondary);
+
+  color-scheme: dark;
+}
+
+html.light {
+  --bg-primary: #f4f6fb;
+  --bg-secondary: #ffffff;
+  --surface: #ffffff;
+  --text-primary: #141820;
+  --text-secondary: #5c6575;
+  --accent: #2563eb;
+  --accent-strong: #3b82f6;
+  --accent-soft: rgba(37, 99, 235, 0.08);
+  --line: #e2e7f0;
+  --glow: rgba(37, 99, 235, 0.25);
+
+  --bg: var(--bg-primary);
+  --ink: var(--text-primary);
+  --ink-soft: var(--text-secondary);
+
+  color-scheme: light;
+}
+
+// Backwards-compatible hook for anything toggling body[data-theme='dark']
+body[data-theme='dark'] {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #0d0f14;
+  --surface: #12141c;
+  --text-primary: #e9ecf5;
+  --text-secondary: #9aa3b5;
+  --accent: #3b82f6;
+  --accent-soft: rgba(59, 130, 246, 0.14);
+  --line: #1c2230;
+  --glow: rgba(59, 130, 246, 0.35);
+}

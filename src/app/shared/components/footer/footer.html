@@ -1,0 +1,19 @@
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-name">{{ lang.t('nav.brand') }}</span>
+      <p>{{ lang.t('footer.tagline') }}</p>
+    </div>
+
+    <nav class="footer-links">
+      <a (click)="goTo('home')">{{ lang.t('nav.home') }}</a>
+      <a (click)="goTo('about')">{{ lang.t('nav.about') }}</a>
+      <a (click)="goTo('projects')">{{ lang.t('nav.projects') }}</a>
+      <a (click)="goTo('contact')">{{ lang.t('nav.contact') }}</a>
+    </nav>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© {{ year }} {{ lang.t('nav.brand') }}. {{ lang.t('footer.rights') }}</span>
+  </div>
+</footer>

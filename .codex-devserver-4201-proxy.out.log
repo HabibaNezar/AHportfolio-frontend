@@ -1,0 +1,45 @@
+
+> portfolio-frontend@0.0.0 start
+> ng serve --proxy-config proxy.conf.json --port 4201
+
+[33m❯[39m Building...
+[32m✔[39m Building...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m          [2m | [22m [1mRaw size[22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m           [2m | [22m  [36m3.63 kB[39m[2m | [22m
+[32mchunk-6B5Z4KSF.js[39m  [2m | [22m[2m-[22m              [2m | [22m  [36m2.03 kB[39m[2m | [22m
+[32mstyles.css[39m         [2m | [22m[2mstyles[22m         [2m | [22m[36m601 bytes[39m[2m | [22m
+
+[1m [22m                  [2m | [22m[1mInitial total[22m  [2m | [22m  [1m6.26 kB[22m
+
+[1mLazy chunk files[22m   [2m | [22m[1mNames[22m          [2m | [22m [1mRaw size[22m
+[32mchunk-XNBTSZNK.js[39m  [2m | [22m[2mhome[22m           [2m | [22m [36m11.39 kB[39m[2m | [22m
+[32mchunk-KYNDZN3L.js[39m  [2m | [22m[2m-[22m              [2m | [22m  [36m8.56 kB[39m[2m | [22m
+[32mchunk-MGVXZL5Y.js[39m  [2m | [22m[2mdashboard-login[22m[2m | [22m  [36m7.03 kB[39m[2m | [22m
+[32mchunk-UDPEVG3L.js[39m  [2m | [22m[2mproject-detail[22m [2m | [22m  [36m7.01 kB[39m[2m | [22m
+[32mchunk-RTVOILHD.js[39m  [2m | [22m[2mproject-list[22m   [2m | [22m  [36m5.71 kB[39m[2m | [22m
+[32mchunk-RUOWK5YY.js[39m  [2m | [22m[2mproject-manager[22m[2m | [22m  [36m4.91 kB[39m[2m | [22m
+[32mchunk-DN7UMJZP.js[39m  [2m | [22m[2m-[22m              [2m | [22m  [36m2.39 kB[39m[2m | [22m
+
+Application bundle generation complete. [7.946 seconds] - 2026-07-27T16:52:11.740Z
+
+Watch mode enabled. Watching for file changes...
+NOTE: Raw file sizes do not reflect development server per-request transformations.
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m4201[22m/[39m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+[33m❯[39m Changes detected. Rebuilding...
+[32m✔[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m          [2m | [22m [1mRaw size[22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m           [2m | [22m  [36m3.63 kB[39m[2m | [22m
+[32mstyles.css[39m         [2m | [22m[2mstyles[22m         [2m | [22m[36m687 bytes[39m[2m | [22m
+
+[1mLazy chunk files[22m   [2m | [22m[1mNames[22m          [2m | [22m [1mRaw size[22m
+[32mchunk-LWB3E2RU.js[39m  [2m | [22m[2mhome[22m           [2m | [22m [36m17.90 kB[39m[2m | [22m
+[32mchunk-MAMKFUBP.js[39m  [2m | [22m[2m-[22m              [2m | [22m [36m10.54 kB[39m[2m | [22m
+[32mchunk-UHSKTJIR.js[39m  [2m | [22m[2mdashboard-login[22m[2m | [22m  [36m8.83 kB[39m[2m | [22m
+[32mchunk-GPGAXKYW.js[39m  [2m | [22m[2mproject-detail[22m [2m | [22m  [36m8.79 kB[39m[2m | [22m
+[32mchunk-LPQB7PNJ.js[39m  [2m | [22m[2mproject-list[22m   [2m | [22m  [36m8.38 kB[39m[2m | [22m
+[32mchunk-QOYSRSDY.js[39m  [2m | [22m[2mproject-manager[22m[2m | [22m  [36m6.56 kB[39m[2m | [22m
+
+Application bundle generation complete. [1.479 seconds] - 2026-07-27T16:55:02.026Z
+
+Page reload sent to client(s).

@@ -1,0 +1,139 @@
+<app-navbar />
+
+<section id="about" class="about-section">
+  @if (about(); as a) {
+    <div class="bento-grid">
+      <!-- 1. Experience Card (Top Left) -->
+      <div class="bento-card bento-experience">
+        <div class="scroll-area">
+          <div class="experience-list">
+            @for (exp of a.experiences; track exp.id) {
+              <div class="exp-row">
+                <span class="exp-date">{{ formatDates(exp.from, exp.to) }}</span>
+                <div class="exp-details">
+                  <h4>{{ exp.about }}</h4>
+                  <p>{{ exp.description }}</p>
+                </div>
+              </div>
+            } @empty {
+              <p class="empty-state">{{ lang.t('about.experiencesEmpty') }}</p>
+            }
+          </div>
+        </div>
+        <h2 class="bg-title">{{ lang.t('about.experiencesTitle') || 'Experience' }}</h2>
+      </div>
+
+      <!-- 2. Skills Card (Top Right) -->
+      <div class="bento-card bento-skills">
+        <div #tabsContainer class="skills-tabs-container">
+          @for (category of visibleCategories(); track category.id) {
+            <button
+              class="skill-tab"
+              [class.active]="activeSkillCategoryId() === category.id"
+              [attr.data-cat-id]="category.id"
+              (click)="activeSkillCategoryId.set(category.id)"
+            >
+              {{ category.name }}
+            </button>
+          }
+          @if (othersCategories().length) {
+            <button
+              class="skill-tab skill-tab-others"
+              [class.active]="activeSkillCategoryId() === OTHERS"
+              (click)="activeSkillCategoryId.set(OTHERS)"
+            >
+              {{ lang.t('about.others') || 'Others' }}
+            </button>
+          }
+        </div>
+
+        <div class="scroll-area">
+          <div class="skills-grid">
+            @for (item of activeItems(); track item.id) {
+              <!-- التعديل هنا: شيلنا الاسم وحطينا data-tooltip علشان يظهر فوق الأيقونة -->
+              <div
+                class="skill-icon-wrapper"
+                (mouseenter)="tooltipShow($event, item.name)"
+                (mousemove)="tooltipMove($event)"
+                (mouseleave)="tooltipHide()"
+              >
+                <img
+                  [src]="'icons/' + item.icon + '.svg'"
+                  [alt]="item.name"
+                  class="skill-icon"
+                  loading="lazy"
+                  onerror="
+                    this.style.display = 'none';
+                    this.nextElementSibling.style.display = 'block';
+                  "
+                />
+
+                <!-- ده هيظهر لو الصورة مش موجودة أو مسارها غلط -->
+                <span class="skill-initial" style="display: none">{{ item.name.charAt(0) }}</span>
+              </div>
+            } @empty {
+              <p class="empty-state">{{ lang.t('about.skillsEmpty') }}</p>
+            }
+          </div>
+        </div>
+        <h2 class="bg-title">{{ lang.t('about.skillsTitle') || 'Skills' }}</h2>
+
+        <!-- Tooltip اسم التكنولوجيا -->
+        <div
+          #skillTooltip
+          class="skill-tooltip"
+          [class.visible]="tooltipVisible()"
+          [style.left.px]="tooltipLeft()"
+          [style.top.px]="tooltipTop()"
+        >
+          {{ tooltipText() }}
+        </div>
+      </div>
+
+      <!-- 3. Profile Image Card (Bottom Left) -->
+      <div
+        class="bento-card bento-image"
+        [style.background-image]="avatarUrl() ? 'url(' + avatarUrl() + ')' : null"
+        [attr.aria-label]="profile() ? lang.pick(profile()!.nameAr, profile()!.nameEn) : null"
+      ></div>
+
+      <!-- 4. About Text Card (Bottom Middle) -->
+      <div class="bento-card bento-about">
+        <div class="scroll-area">
+          @if (a.about) {
+            <p class="bio-text">{{ a.about }}</p>
+          }
+        </div>
+        <h2 class="bg-title">{{ lang.t('about.title') || 'About' }}</h2>
+      </div>
+
+      <!-- 5. Contact / CV Card (Bottom Right) -->
+      <div class="bento-card bento-contact">
+        <div class="contact-content">
+          <a [href]="profile()?.resumeUrl" target="_blank" rel="noopener" class="cv-button">
+            Curriculum Vitae
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </a>
+          <div class="social-links">
+            <a [href]="profile()?.githubUrl" target="_blank" rel="noopener" class="social-icon">GH</a>
+            <a [href]="profile()?.linkedInUrl" target="_blank" rel="noopener" class="social-icon">IN</a>
+          </div>
+        </div>
+        <h2 class="bg-title">Contact</h2>
+      </div>
+    </div>
+  }
+</section>

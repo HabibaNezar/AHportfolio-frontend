@@ -1,0 +1,93 @@
+<nav class="navbar">
+  <a
+    class="brand"
+    (click)="goTo('home')"
+    [attr.aria-label]="lang.t('nav.brand')"
+    [attr.title]="lang.t('nav.brand')"
+  >
+    <span class="brand-logo" aria-hidden="true">
+      <svg class="ah-logo logo-base" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="logo-gradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--accent)" />
+            <stop offset="100%" stop-color="var(--accent-strong)" />
+          </linearGradient>
+        </defs>
+        <path d="M 62 165 L 90 55" />
+        <path d="M 90 55 L 114 160" />
+        <path d="M 135 62 L 138 160" />
+        <path d="M 155 52 L 172 160" />
+        <path d="M 45 128 C 90 124, 140 116, 188 108" />
+        <path class="accent" d="M 165 32 Q 170 25 174 22" />
+        <path class="accent" d="M 182 42 Q 187 38 192 37" />
+      </svg>
+      <svg class="ah-logo logo-fill" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path pathLength="1" d="M 62 165 L 90 55" />
+        <path pathLength="1" d="M 90 55 L 114 160" />
+        <path pathLength="1" d="M 135 62 L 138 160" />
+        <path pathLength="1" d="M 155 52 L 172 160" />
+        <path pathLength="1" d="M 45 128 C 90 124, 140 116, 188 108" />
+        <path pathLength="1" class="accent" d="M 165 32 Q 170 25 174 22" />
+        <path pathLength="1" class="accent" d="M 182 42 Q 187 38 192 37" />
+      </svg>
+    </span>
+  </a>
+
+  <div class="controls">
+    <button
+      class="icon-btn"
+      (click)="theme.toggle()"
+      [attr.aria-label]="lang.t('nav.theme')"
+      [attr.title]="lang.t('nav.theme')"
+    >
+      @if (theme.isDark()) {
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      } @else {
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      }
+    </button>
+
+    <button class="lang-btn" (click)="lang.toggle()" [attr.aria-label]="lang.t('nav.language')">
+      <span class="lang-code">{{ lang.lang() === 'en' ? 'AR' : 'EN' }}</span>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </button>
+  </div>
+</nav>

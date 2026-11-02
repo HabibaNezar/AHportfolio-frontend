@@ -1,0 +1,170 @@
+<section class="article-manager">
+  <div class="manager-header">
+    <h2>Articles</h2>
+    <button type="button" class="btn-primary" (click)="startCreate()">Add article</button>
+  </div>
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
+  @if (loading()) {
+    <p class="muted">Loading articles…</p>
+  } @else {
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Slug</th>
+            <th>Status</th>
+            <th>Tags</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (article of articles(); track article.id) {
+            <tr>
+              <td>
+                <strong>{{ article.titleEn }}</strong>
+                <span class="sub">{{ article.titleAr }}</span>
+              </td>
+              <td class="mono">{{ article.slug }}</td>
+              <td>
+                <span class="status" [class.published]="article.status === 'Published'">
+                  {{ article.status }}
+                </span>
+              </td>
+              <td>
+                <span class="tags">{{ article.tags.join(', ') }}</span>
+              </td>
+              <td class="actions">
+                <button type="button" class="btn-ghost" (click)="startEdit(article)">Edit</button>
+                <button type="button" class="btn-danger" (click)="deleteArticle(article.id)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5" class="muted">No articles yet.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (showForm()) {
+    <div class="modal-overlay" (click)="closeForm()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <div class="manager-header">
+          <h3>{{ editingId() === null ? 'Add article' : 'Edit article' }}</h3>
+          <button type="button" class="btn-ghost" (click)="closeForm()">Close</button>
+        </div>
+
+        <form (ngSubmit)="save()">
+          <div class="form-grid">
+            <!-- Titles Row -->
+            <label>
+              Title (EN)
+              <input type="text" name="titleEn" [(ngModel)]="titleEn" required />
+            </label>
+
+            <label>
+              Title (AR)
+              <input type="text" name="titleAr" [(ngModel)]="titleAr" required />
+            </label>
+
+            <!-- Slug & Status Row -->
+            <label>
+              Slug (auto-generated if empty)
+              <input type="text" name="slug" [(ngModel)]="slug" />
+            </label>
+
+            <label>
+              Status
+              <select name="status" [(ngModel)]="status">
+                <option value="Draft">Draft</option>
+                <option value="Published">Published</option>
+              </select>
+            </label>
+
+            <!-- Excerpts Row -->
+            <label>
+              Excerpt (EN)
+              <textarea name="excerptEn" [(ngModel)]="excerptEn" rows="3"></textarea>
+            </label>
+
+            <label>
+              Excerpt (AR)
+              <textarea name="excerptAr" [(ngModel)]="excerptAr" rows="3"></textarea>
+            </label>
+
+            <!-- Content Row (Full Width for each language) -->
+            <label class="col-span-2">
+              Content (EN)
+              <textarea name="contentEn" [(ngModel)]="contentEn" rows="6"></textarea>
+            </label>
+
+            <label class="col-span-2">
+              Content (AR)
+              <textarea name="contentAr" [(ngModel)]="contentAr" rows="6"></textarea>
+            </label>
+
+            <!-- Tags & Published Date Row -->
+            <label>
+              Tags (comma-separated)
+              <input
+                type="text"
+                name="tags"
+                [(ngModel)]="tagsInput"
+                placeholder="angular, tutorial, api"
+              />
+            </label>
+
+            <label>
+              Published at
+              <input type="datetime-local" name="publishedAt" [(ngModel)]="publishedAt" />
+            </label>
+
+            <!-- Cover Media Row -->
+            <label>
+              Cover (image file)
+              <input type="file" accept="image/*" (change)="onCoverChange($event)" />
+              @if (coverImageUrl) {
+                <span class="muted"
+                  >Current:
+                  <a [href]="coverImageUrl" target="_blank" rel="noopener">{{
+                    coverImageUrl
+                  }}</a></span
+                >
+              }
+            </label>
+
+            <label>
+              Cover image URL
+              <input
+                type="url"
+                name="coverImageUrl"
+                [(ngModel)]="coverImageUrl"
+                placeholder="https://..."
+              />
+            </label>
+          </div>
+
+          @if (uploading()) {
+            <p class="muted">Uploading cover…</p>
+          }
+
+          <div class="form-actions">
+            <button type="button" class="btn-ghost" (click)="closeForm()">Cancel</button>
+            <button type="submit" class="btn-primary" [disabled]="saving()">
+              {{ saving() ? 'Saving…' : 'Save' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</section>

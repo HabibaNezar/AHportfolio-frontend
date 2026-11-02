@@ -1,0 +1,224 @@
+/* Base Layout */
+.profile-manager {
+  width: 100%;
+  padding: 32px;
+  box-sizing: border-box;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.manager-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+
+  .header-titles h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+  }
+
+  .header-titles .muted {
+    margin: 0;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+}
+
+/* Card Wrapper */
+.form-card {
+  background: var(--bg);
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+  padding: 32px;
+  max-width: 1200px; /* ليحافظ على تناسق الفورم في الشاشات العملاقة */
+}
+
+/* Modern Grid Form */
+.modern-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.section-divider {
+  margin-top: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  
+  h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  input, textarea {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: var(--ink);
+    transition: all 0.2s ease;
+    font-family: inherit;
+
+    &:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
+    }
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+}
+
+/* File Upload Customization */
+.file-upload-wrapper {
+  background: color-mix(in srgb, var(--line) 15%, transparent);
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  box-sizing: border-box;
+  
+  input[type="file"] {
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-size: 13px;
+    box-shadow: none;
+    width: 100%;
+  }
+  
+  .file-hint {
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    
+    &.link {
+      color: var(--accent);
+      text-decoration: none;
+      padding: 4px 12px;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border-radius: 20px;
+      transition: all 0.2s;
+      
+      &:hover {
+        background: color-mix(in srgb, var(--accent) 20%, transparent);
+      }
+    }
+  }
+}
+
+/* Alerts */
+.alert {
+  padding: 16px 20px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  font-weight: 500;
+
+  &.alert-error {
+    background: color-mix(in srgb, #c62828 10%, transparent);
+    color: #c62828;
+    border: 1px solid color-mix(in srgb, #c62828 30%, transparent);
+  }
+  &.alert-success {
+    background: color-mix(in srgb, #2e7d32 10%, transparent);
+    color: #2e7d32;
+    border: 1px solid color-mix(in srgb, #2e7d32 30%, transparent);
+  }
+  &.alert-info {
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    margin-bottom: 0;
+  }
+}
+
+/* Buttons & Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  border-radius: 10px;
+  padding: 12px 32px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover:not(:disabled) {
+    background: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.loading-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .profile-manager {
+    padding: 16px;
+  }
+  
+  .modern-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-card {
+    padding: 24px 16px;
+  }
+}

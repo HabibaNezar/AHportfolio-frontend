@@ -1,0 +1,11 @@
+// Logical properties (padding-inline-start, margin-inline-end, etc.) already
+// flip automatically with [dir]. Only things that CAN'T use logical
+// properties need manual overrides here — e.g. mirrored icons.
+
+[dir='rtl'] {
+  text-align: right;
+
+  .icon-arrow {
+    transform: scaleX(-1);
+  }
+}

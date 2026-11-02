@@ -1,0 +1,52 @@
+<header class="dashboard-topbar">
+  <app-navbar />
+</header>
+
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <a routerLink="/">Portfolio</a>
+      <span>Dashboard</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a
+        routerLink="/dashboard/projects"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Projects
+      </a>
+      <a
+        routerLink="/dashboard/profile"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Profile
+      </a>
+      <a
+        routerLink="/dashboard/articles"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Articles
+      </a>
+      <a
+        routerLink="/dashboard/about"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        About
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a class="back-link" routerLink="/">Back to site</a>
+      <button type="button" (click)="logout()">Logout</button>
+    </div>
+  </aside>
+
+  <main class="dashboard-content">
+    <router-outlet />
+  </main>
+</div>

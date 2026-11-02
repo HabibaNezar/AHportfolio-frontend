@@ -1,0 +1,258 @@
+/* =========================================================== #about Bento Grid */
+
+.about-section {
+  height: calc(100vh - 92px);
+  height: calc(100dvh - 92px);
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 16px clamp(16px, 4vw, 48px);
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 16px;
+  height: 100%;
+}
+
+/* Base Card Styling */
+.bento-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  }
+}
+
+/* Background Large Titles */
+.bg-title {
+  position: relative;
+  margin: 0;
+  margin-top: auto; 
+  padding-top: 24px;
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 700;
+  color: color-mix(in srgb, var(--text-primary) 15%, transparent);
+  letter-spacing: -0.02em;
+  pointer-events: none;
+  line-height: 1;
+}
+
+/* Custom Scrollbar for inner content */
+.scroll-area {
+  flex-grow: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 12px;
+  margin-right: -12px; 
+  z-index: 2;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--text-primary) 15%, transparent);
+    border-radius: 10px;
+  }
+  &:hover::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--text-primary) 30%, transparent);
+  }
+}
+
+/* --- Specific Cards Layout --- */
+.bento-experience { grid-column: span 5; }
+.bento-skills { grid-column: span 7; }
+.bento-image {
+  grid-column: span 3;
+  padding: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: linear-gradient(135deg, var(--surface) 0%, color-mix(in srgb, var(--accent) 20%, transparent) 100%);
+}
+.bento-about { grid-column: span 6; }
+.bento-contact { grid-column: span 3; justify-content: flex-end; }
+
+/* --- 1. Experience Content --- */
+.experience-list { display: flex; flex-direction: column; gap: 32px; }
+.exp-row { display: grid; grid-template-columns: 100px 1fr; gap: 24px; align-items: baseline; }
+.exp-date { font-family: ui-monospace, monospace; color: var(--ink-soft); font-size: 13px; font-weight: 500; }
+.exp-details h4 { color: var(--text-primary); font-size: 16px; font-weight: 600; margin: 0 0 8px; }
+.exp-details p { color: var(--ink-soft); font-size: 14px; line-height: 1.6; margin: 0; }
+
+/* --- 2. Skills Content --- */
+.skills-tabs-container {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  overflow: hidden;
+  gap: 8px;
+  background: color-mix(in srgb, var(--line) 40%, transparent);
+  padding: 8px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  
+  /* التعديل هنا: الارتفاع ثابت ومفيش أي حاجة هتخليه ينط */
+  height: 52px;
+  min-height: 52px;
+  flex-shrink: 0; 
+}
+
+.skill-tab {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  white-space: nowrap;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+
+  &:hover {
+    color: var(--text-primary);
+  }
+
+  &.active {
+    background: var(--surface);
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.skill-tab-others {
+  border: 1px dashed color-mix(in srgb, var(--accent) 55%, transparent);
+  color: var(--accent-strong);
+  margin-inline-start: auto;
+
+  &:hover {
+    color: var(--accent-strong);
+    border-color: var(--accent);
+  }
+
+  &.active {
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+  }
+}
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* ستايل الأيقونات والـ Tooltip */
+.skill-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--line) 30%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  position: relative;
+  cursor: pointer;
+
+  .skill-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+
+  .skill-initial {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  /* لما نعمل Hover الأيقونة تترفع شوية */
+  &:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+  }
+}
+
+/* Tooltip مثبت على الشاشة — مش بيتقسم من حدود الكارت ولا الـ scroll */
+.skill-tooltip {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  background: var(--text-primary);
+  color: var(--surface);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* --- 4. About Content --- */
+.bio-text { color: var(--ink-soft); font-size: clamp(15px, 1.2vw, 17px); line-height: 1.8; margin: 0; white-space: pre-line; }
+
+/* --- 5. Contact Content --- */
+.contact-content { display: flex; flex-direction: column; gap: 16px; z-index: 2; margin-bottom: 24px; }
+.cv-button {
+  display: flex; align-items: center; justify-content: space-between; background: var(--text-primary);
+  color: var(--surface); padding: 12px 16px; border-radius: 12px; font-size: 14px; font-weight: 600;
+  text-decoration: none; transition: opacity 0.2s;
+}
+.cv-button:hover { opacity: 0.9; }
+.social-links { display: flex; gap: 8px; }
+.social-icon {
+  width: 44px; height: 44px; border-radius: 12px; background: color-mix(in srgb, var(--line) 40%, transparent);
+  color: var(--text-primary); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600;
+  text-decoration: none; transition: background 0.2s;
+}
+.social-icon:hover { background: var(--accent); color: #fff; }
+
+/* ======================================================== Responsive Layout */
+@media (max-width: 1200px) {
+  .bento-experience, .bento-skills, .bento-contact { grid-column: span 12; }
+  .bento-image { grid-column: span 4; }
+  .bento-about { grid-column: span 8; }
+  .bento-contact { grid-row: auto; }
+}
+
+@media (max-width: 768px) {
+  .about-section { height: auto; overflow: visible; }
+  .bento-grid { grid-template-columns: 1fr; grid-template-rows: auto; grid-auto-rows: auto; height: auto; }
+  .bento-card { grid-column: span 1 !important; min-height: 320px; }
+  .exp-row { grid-template-columns: 1fr; gap: 8px; }
+}
